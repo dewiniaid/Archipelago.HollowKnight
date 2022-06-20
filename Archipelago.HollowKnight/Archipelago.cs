@@ -93,6 +93,10 @@ namespace Archipelago.HollowKnight
             MessageType = MessageType.None
         };
 
+        // Events support
+        public static event Action OnArchipelagoGameStarted;
+        public static event Action OnArchipelagoGameEnded;
+
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects)
         {
             base.Initialize();
@@ -107,7 +111,6 @@ namespace Archipelago.HollowKnight
             MenuChanger.ModeMenu.AddMode(new ArchipelagoModeMenuConstructor());
 
             ModHooks.SavegameLoadHook += ModHooks_SavegameLoadHook;
-
             Log("Initialized");
         }
 
@@ -189,6 +192,15 @@ namespace Archipelago.HollowKnight
         public void EndGame()
         {
             LogDebug("Ending Archipelago game");
+            try
+            {
+                OnArchipelagoGameEnded?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                LogError($"Error invoking OnArchipelagoGameEnded:\n {ex}");
+            }
+
             DisconnectArchipelago();
             ArchipelagoEnabled = false;
             ApSettings = new();
@@ -253,6 +265,14 @@ namespace Archipelago.HollowKnight
                 throw ex;
             }
             goal.Select();
+
+            try
+            {
+                OnArchipelagoGameStarted?.Invoke();
+            } catch (Exception ex)
+            {
+                LogError($"Error invoking OnArchipelagoGameStarted:\n {ex}");
+            }
         }
 
         private LoginResult ConnectToArchipelago()
