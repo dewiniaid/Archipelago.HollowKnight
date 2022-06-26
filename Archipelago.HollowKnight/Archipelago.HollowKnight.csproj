@@ -7,8 +7,8 @@
     <Product>HollowKnight.Archipelago</Product>
     <Description></Description>
     <Copyright></Copyright>
-    <AssemblyVersion>0.0.9.1</AssemblyVersion>
-    <FileVersion>0.0.9.1</FileVersion>
+    <AssemblyVersion>0.0.9.2</AssemblyVersion>
+    <FileVersion>0.0.9.2</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <LangVersion>latest</LangVersion>
     <!-- Change this to the path of your modded HK installation -->
